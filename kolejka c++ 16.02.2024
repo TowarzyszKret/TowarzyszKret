@@ -1,0 +1,135 @@
+#include <iostream>
+#include <queue>
+
+using namespace std;
+
+void czyszczenie_kolejki(queue<int>& kolejka)
+{
+    while (!kolejka.empty())
+    {
+        kolejka.pop();
+    }
+    if (kolejka.empty())
+    {
+        cout << "Kolejka jest pusta o_O" << endl;
+    }
+    else
+    {
+        cout << kolejka.front() << " --- " << kolejka.back() << endl;
+    }
+}
+
+void dodawanie_do_kolejki(queue<int>& kolejka, int numer, int wartosc)
+{
+    if (kolejka.empty())
+    {
+        cout << "Kolejka jest pusta o_O" << endl;
+    }
+    else
+    {
+
+        if (numer < 1 || numer > kolejka.size() + 1)
+        {
+            cout << "Numer poza zakresem kolejki" << endl;
+            return;
+        }
+
+        int aktualna_pozycja = 1;
+        queue<int> pomocnicza_kolejka(kolejka);
+        kolejka = queue<int>();
+
+        while (!pomocnicza_kolejka.empty())
+        {
+            int aktualny_element = pomocnicza_kolejka.front();
+            pomocnicza_kolejka.pop();
+
+            if (aktualna_pozycja == numer)
+            {
+                kolejka.push(wartosc);
+                kolejka.push(aktualny_element);
+            }
+            else
+            {
+                kolejka.push(aktualny_element);
+            }
+
+            aktualna_pozycja++;
+        }
+    }
+}
+void usun_z_kolejki(queue<int>& kolejka, int numer)
+{
+    if (kolejka.empty())
+    {
+        cout << "Kolejka jest pusta o_O" << endl;
+    }
+    else
+    {
+        if (numer < 1 || numer > kolejka.size())
+        {
+            cout << "Numer poza zakresem kolejki" << endl;
+        }
+        else
+        {
+            queue<int> pomocnicza_kolejka(kolejka);
+            kolejka = queue<int>();
+
+            int aktualna_pozycja = 1;
+            while (!pomocnicza_kolejka.empty())
+            {
+                int aktualny_element = pomocnicza_kolejka.front();
+                pomocnicza_kolejka.pop();
+
+                if (aktualna_pozycja != numer)
+                {
+                    kolejka.push(aktualny_element);
+                }
+
+                aktualna_pozycja++;
+            }
+        }
+    }
+}
+
+void wyswietl_kolejke(const queue<int>& kolejka)
+{
+    if (kolejka.empty())
+    {
+        cout << "Kolejka jest pusta o_O" << endl;
+    }
+    else
+    {
+        queue<int> pomocnicza_kolejka(kolejka);
+        cout << "Kolejka: ";
+        while (!pomocnicza_kolejka.empty())
+        {
+            cout << pomocnicza_kolejka.front() << " ";
+            pomocnicza_kolejka.pop();
+        }
+        cout << endl;
+    }
+}
+
+
+int main()
+{
+    queue<int> kolejka;
+    kolejka.push(100);
+    kolejka.push(21);
+    kolejka.push(75);
+    kolejka.push(123);
+    kolejka.push(43);
+    kolejka.push(32);
+    
+    cout << kolejka.front() << " --- " << kolejka.back() << endl;
+    cout << kolejka.front() << " --- " << kolejka.back() << endl;
+    cout << kolejka.size() << endl;
+
+    
+    dodawanie_do_kolejki(kolejka, 6, 77);
+
+
+    cout << kolejka.size() << endl;
+   
+    return 0;
+};
